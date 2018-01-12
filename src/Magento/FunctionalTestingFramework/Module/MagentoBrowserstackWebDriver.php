@@ -4,12 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+namespace Magento\FunctionalTestingFramework\Module;
+
 require 'vendor/autoload.php';
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
 
-class BrowserStackWebDriver extends Magento\FunctionalTestingFramework\Module\MagentoWebDriver
+class MagentoBrowserstackWebDriverB extends Magento\FunctionalTestingFramework\Module\MagentoWebDriver
 {
     private $bs_local;
 
