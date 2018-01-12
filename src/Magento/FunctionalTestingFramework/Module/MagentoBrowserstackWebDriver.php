@@ -6,12 +6,12 @@
 
 namespace Magento\FunctionalTestingFramework\Module;
 
-require 'vendor/autoload.php';
+#require 'vendor/autoload.php';
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
 
-class MagentoBrowserstackWebDriverB extends Magento\FunctionalTestingFramework\Module\MagentoWebDriver
+class MagentoBrowserstackWebDriver extends MagentoWebDriver
 {
     private $bs_local;
 
@@ -22,7 +22,7 @@ class MagentoBrowserstackWebDriverB extends Magento\FunctionalTestingFramework\M
         if(array_key_exists("browserstack.local", $this->config["capabilities"]) && $this->config["capabilities"]["browserstack.local"])
         {
             $bs_local_args = array("key" => $this->config["capabilities"]["browserstack.key"]);
-            $this->bs_local = new BrowserStack\Local();
+            $this->bs_local = new \BrowserStack\Local();
             $this->bs_local->start($bs_local_args);
         }
 
