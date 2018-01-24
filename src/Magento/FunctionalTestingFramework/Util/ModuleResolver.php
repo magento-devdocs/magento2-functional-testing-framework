@@ -129,7 +129,7 @@ class ModuleResolver
             return $this->enabledModules;
         }
 
-        $url = $_ENV['MAGENTO_BASE_URL'] . $this->moduleUrl;
+        $url = ConfigSanitizerUtil::sanitizeUrl($_ENV['MAGENTO_BASE_URL']) . $this->moduleUrl;
 
         $headers = [
             'Authorization: Bearer ' . $token,
@@ -175,6 +175,16 @@ class ModuleResolver
         }
 
         $enabledModules = $this->getEnabledModules();
+        $forceGeneration = $GLOBALS['FORCE_PHP_GENERATE'] ?? false;
+
+        if (empty($enabledModules) && !$forceGeneration) {
+            trigger_error(
+                "Could not retrieve enabled modules from provided 'MAGENTO_BASE_URL'," .
+                "please make sure Magento is available at this url",
+                E_USER_ERROR
+            );
+        }
+
         $modulePath = defined('TESTS_MODULE_PATH') ? TESTS_MODULE_PATH : TESTS_BP;
         $allModulePaths = glob($modulePath . '*/*');
         if (empty($enabledModules)) {
@@ -213,7 +223,7 @@ class ModuleResolver
             return false;
         }
 
-        $url = $_ENV['MAGENTO_BASE_URL'] . $this->adminTokenUrl;
+        $url = ConfigSanitizerUtil::sanitizeUrl($_ENV['MAGENTO_BASE_URL']) . $this->adminTokenUrl;
         $data = [
             'username' => $login,
             'password' => $password
