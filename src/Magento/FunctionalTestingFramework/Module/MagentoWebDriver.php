@@ -292,6 +292,8 @@ class MagentoWebDriver extends WebDriver
         $this->waitForJS('return document.readyState == "complete"', $timeout);
         $this->waitForAjaxLoad($timeout);
         $this->waitForLoadingMaskToDisappear();
+
+        $this->closeAdminNotification();
     }
 
     /**
