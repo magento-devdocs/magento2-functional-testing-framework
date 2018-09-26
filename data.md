@@ -1,6 +1,6 @@
 ---
-mftf-release: 2.3.0
-redirect_from: /guides/v2.3/magento-functional-testing-framework/2.3/data.html
+mftf-release: 2.0.2
+redirect_from: /guides/v2.2/magento-functional-testing-framework/2.2/data.html
 ---
 
 # Input testing data
@@ -16,7 +16,7 @@ The following diagram shows the XML structure of an MFTF data object:
 
 {%include_relative img/data-dia.svg%}
 
-### Supply data to test by reference to a data entity
+### Supply data to test by reference to a data entity {#supply-data}
 {%raw%}
 Test steps requiring `<data>` input in an action, like filling a field with a string, may reference an attribute from a data entity:
 
@@ -30,61 +30,50 @@ In this example:
 * `name` is a `<data>` key of the entity. The corresponding value will be assigned to `userInput` as a result.
 
 ****
-#### Environmental data
 
 ```xml
-userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}"
+userInput="{{_ENV.MAGENTO_ADMIN_USERNAME}}
 ```
 
 In this example:
 
 * `_ENV` is a reference to the `dev/tests/acceptance/.env` file, where basic environment variables are set.
-* `MAGENTO_ADMIN_USERNAME` is a name of an environment variable.
-The corresponding value will be assigned to `userInput` as a result.
+* `MAGENTO_ADMIN_USERNAME` is a name of an environment variable. The corresponding value will be assigned to `userInput` as a result.
 
-#### Sensitive data
+### Persist a data entity as a prerequisite of a test {#persist-data}
 
-```xml
-userInput="{{_CREDS.MY_SECRET_TOKEN}}"
-```
+A test can specify an entity which should be persisted (created in the database) so that the test actions can operate on existing known data.
 
-In this example:
-
-* `_CREDS` is a reference to the `dev/tests/acceptance/.credentials` file, where sensitive data and secrets are stored for use in a test.
-* `MY_SECRET_TOKEN` is the name of a key in the credentials variable.
-The corresponding value of the credential will be assigned to `userInput` as a result.
-* Credential values are not generated into a test. Instead, they are dynamically retrieved, encrypted and decrypted when used by a specific action during the test's execution.
-* References to credentials do not appear decrypted in the console, error logs or test reports, their values can only be seen decrypted in the .credentials file in which they are stored.
-
-### Persist a data entity as a prerequisite of a test
-
-A test can specify an entity to be persisted (created in the database) so that the test actions could operate on the existing known data.
-
-Example of referencing `data` in a test:
+If `<data>` has been persisted in `<test>`:
 
 ```xml
-userInput="$createCustomer.email$"
+userInput="$customer.email$"
 ```
 
+If `<data>` has been persisted in `<before>` or `<after>`:
+
+```xml
+userInput="$$customer.email$$"
+```
 {%endraw%}
 In this example:
 
-* `createCustomer` is a `stepKey` of the corresponding test step that creates an entity.
-* `email` is a `dataKey` of the entity.
-The corresponding value will be assigned to `userInput` as a result.
+* `customer` is a `stepKey` of the corresponding test step, where an entity is created.
+* `email` is a `dataKey` of the entity. The corresponding value will be assigned to `userInput` as a result.
 
 {%
 include note.html
 type="info"
-content='As of MFTF 2.3.6, you no longer need to differentiate between scopes (a test, a hook, or a suite) for persisted data when referencing it in tests.
+content="This is a side effect of PHP outputting. Even though both are nested, in PHP they end up being different methods inside a class.
 
-The MFTF now stores the persisted data and attempts to retrieve it using the combination of `stepKey` and the scope of where it has been called.
-The current scope is prefered, then widening to _test > hook > suite_ or _hook > test > suite_.
+Since `_before()` is a function outside a `myTest()` test method, it creates a variable in the class scope instead of the method scope (`$this->persistedData` vs `$persistedData`).
 
-This emphasizes the practice for the `stepKey` of `createData` to be descriptive and unique, as a duplicated `stepKey` in both a `<test>` and `<before>` prefers the `<test>` data.'
+As they are relevant to test:
+* `$persistedData.field$` turns into `$persistedData.getData('field')`.
+* `$$persistedData.field$$` turns into `$this->persistedData.getData('field')`."
 %}
 
-### Use data returned by test actions
+### Use data returned by test actions {#use-returned-data}
 {%raw%}
 A test can also reference data that was returned as a result of [test actions](./test/actions.html#actions-returning-a-variable), like the action `<grabValueFrom selector="someSelector" stepKey="grabStepKey>`.
 
@@ -115,7 +104,7 @@ The format of `<data>` is:
 <?xml version="1.0" encoding="UTF-8"?>
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
     <entity name="" type="">
         <data key=""></data>
     </entity>
@@ -142,7 +131,7 @@ Example (`.../Catalog/Data/CategoryData.xml` file):
 <?xml version="1.0" encoding="UTF-8"?>
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
     <entity name="_defaultCategory" type="category">
         <data key="name" unique="suffix">simpleCategory</data>
         <data key="name_lwr" unique="suffix">simplecategory</data>

@@ -1,6 +1,6 @@
 ---
-mftf-release: 2.3.0
-redirect_from: /guides/v2.3/magento-functional-testing-framework/2.3/suite.html
+mftf-release: 2.2.0
+redirect_from: /guides/v2.2/magento-functional-testing-framework/2.2/suite.html
 ---
 
 # Suites
@@ -12,9 +12,9 @@ Suites are essentially groups of tests that run in the specific conditions (prec
 They enable you including, excluding, and grouping tests for a customized test run when you need it.
 You can form suites using separate tests, groups, and modules.
 
-Each suite must be defined in the `<magento 2 root>/dev/tests/acceptance/tests/_suite/suite.xml` file.
-The generated tests for each suite go into a separate directory under `<magento 2 root>/dev/tests/acceptance/tests/functional/Magento/FunctionalTest/_generated/`.
-By default, all generated tests are stored in the _default_ suite under `.../Magento/FunctionalTest/_generated/default/`
+Each suite must be defined in the _\<magento 2 root\>/dev/tests/acceptance/tests/_suite/suite.xml_ file.
+The generated tests for each suite go into a separate directory under _\<magento 2 root\>/dev/tests/acceptance/tests/functional/Magento/FunctionalTest/\_generated_.
+By default, all generated tests are stored in the _default_ suite under _.../Magento/FunctionalTest/\_generated/default_
 
 {%
 include note.html
@@ -55,7 +55,7 @@ The format of a suite:
   - must not match any existing group value.
   For example, the suite `<suite name="ExampleTest">` will fail during test run if any test contains in annotations `<group value="ExampleTest">`.
   - must not be `default` or `skip`. Tests that are not in any suite are generated under the `default` suite.
-  The suite name `skip` is synonymous to including a test in the `<group value="skip"/>`, which will be deprecated in MFTF 3.0.0.
+  The suite name `skip` is synonymous to including a test in the `<group value="skip"/>`.
   - can contain letters, numbers, and underscores.
   - should be upper camel case.
 - A suite must contain at least one `<include>`, or one `<exclude>`, or both.
@@ -81,22 +81,22 @@ You cannot isolate this test from preconditions of the suite; it cannot be used 
 There are several ways to generate and execute your new test in the context of a suite:
 - Edit the appropriate `suite.xml` to include your test only and run:
   ```bash
-  vendor/bin/mftf group <suiteName>
+  vendor/bin/robo group <suiteName>
   ```
 - Temporarily add a group to your test like `<group value="foo">` and run:
   ```bash
-  vendor/bin/mftf group foo
+  vendor/bin/robo group foo
   ```
 - To limit generation to your suite/test combination, run in conjunction with the above:
   ```bash
-  vendor/bin/mftf generate:suite <suite>
+  vendor/bin/robo generate:suite <suite>
   ```
 - To generate any combination of suites and tests, use [`generate:tests`] with the `--tests` flag.
 
 ## Examples
 
-### Enabling/disabling WYSIWYG in suite conditions
-<!-- {{raw}} -->
+### Browser actions in suite conditions
+{{raw}}
 ```xml
 <suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Suite/etc/suiteSchema.xsd">
     <suite name="WYSIWYG">
@@ -122,19 +122,17 @@ There are several ways to generate and execute your new test in the context of a
     </suite>
 </suites>
 ```
-<!-- {{endraw}} -->
-This example declares a suite with the name `WYSIWYG`.
-The suite enables WYSIWYG *before* running tests.
-It performs the following steps:
+{{endraw}}
 
+This example declares a suite with the name `WYSIWYG`.
+The suite requires enabling WYSIWYG before running tests:
 1. Log in to the backend.
 2. Navigate to the **Configuration** page.
 3. Enable **WYSIWYG** in the Magento instance.
 
-*After* the testing, the suite returns the Magento instance to the initial state disabling WYSIWYG:
-
+After the testing, the Magento instance returns to its state prior to the test:
 1. Log back in.
-2. Disable **WYSIWYG** so that
+2. Disable **WYSIWYG** so that 
 
 This suite includes all tests that contain the `<group value="WYSIWYG"/>` annotation.
 
@@ -282,7 +280,7 @@ Attributes|Type|Use|Description
 [action groups]: test/action-groups.html
 [`<after>`]: #after-tag
 [`<before>`]: #before-tag
-[`generate:tests`]: commands/mftf.html#generatetests
+[`generate:tests`]: commands/robo.html#generate
 [test]: test.html
 [`<test>`]: #test-tag
 [`<group>`]: #group-tag

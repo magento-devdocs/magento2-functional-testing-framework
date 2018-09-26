@@ -1,6 +1,6 @@
 ---
-mftf-release: 2.3.6
-redirect_from: /guides/v2.3/magento-functional-testing-framework/2.3/test/annotations.md
+mftf-release: 2.2.0
+redirect_from: /guides/v2.2/magento-functional-testing-framework/2.2/annotations.html
 ---
 
 # Annotations
@@ -21,23 +21,20 @@ The following conventions apply to annotations in the Magento Functional Testing
 - There is no distinction made in XML between Codeception annotations and Allure annotations.
 - Each annotation contains only one value.
 If multiple annotation values are supported and required each value requires a separate annotation.
-- Tests must contain all of the following annotations: stories, title, description, severity.
 
 Recommended use cases of the annotation types:
+- [features] - report grouping, a set of tests that verify a feature.
 - [stories] - report grouping, a set of tests that verify a story.
-- [title] - description of the test purpose.
 - [group] - general functionality grouping.
+- [title] - description of the test purpose.
 - [description] - description of how the test achieves the purpose defined in the title.
-- [skip] - a label for the test to be skipped during generation (for example, an incomplete test blocked by an issue)
 
 ## Example
 
 ```xml
 <annotations>
-    <stories value="Category Creation"/>
+    <features value="Category Creation"/>
     <title value="Create a Category via Admin"/>
-    <description value="Test logs into admin backend and creates a category."/>
-    <severity value="CRITICAL"/>
     <group value="category"/>
 </annotations>
 ```
@@ -83,11 +80,15 @@ The `<group>` element is an implementation of a [`@group`] Codeception tag.
 Any test can be a part of multiple groups.
 The purpose of grouping is to create a set of test for a functionality or purpose, such as all cart tests or all slow tests and run them together locally.
 
-{:.bs-callout .bs-callout-warning}
-Group values cannot collide with [suite] names.
+{% include note.html
+type="warning"
+content="Group values cannot collide with [suite] names."
+%}
 
-{:.bs-callout .bs-callout-tip}
-Add `<skip>` to the test to skip it during test run.
+{% include note.html
+type="tip"
+content="Add `<group value=\"skip\"/>` to the test if you want to skip it during test run."
+%}
 
 Attribute|Type|Use|Definition
 ---|---|---|---
@@ -107,6 +108,7 @@ It specifies what is returned from a test execution.
 Attribute|Type|Use
 ---|---|--
 `value`|string|required
+
 
 #### Example
 
@@ -128,28 +130,6 @@ Attribute|Type|Use|Acceptable values
 <severity value="CRITICAL"/>
 ```
 
-### skip
-
-Use the `<skip>` element to skip a test.
-It contains one or more child elements `<issueId>` to specify one or more issues that cause the test skipping.
-
-##### issueId
-
-This element under `<skip>` is required at least once and contains references to issues that cause the test to be skipped.
-
-Attribute|Type|Use
----|---|--
-`value`|string|required
-
-#### Example
-
-```xml
-<skip>
-    <issueId value="#117"/>
-    <issueId value="MC-345"/>
-</skip>
-```
-
 ### stories
 
 The `<stories>` element is an implementation of a [`@Stories`] Allure tag.
@@ -168,10 +148,7 @@ Attribute|Type|Use
 
 ### testCaseId
 
-The `<testCaseId>` element is an implementation of a [`@TestCaseId`] Allure tag.
-It specifies a ZephyrId for a test.
-
-This tag is prefixed to a title of the test annotation to make the test title unique in Allure.
+The `<testCaseId>` element is an implementation of a [`@TestCaseId`] Allure tag. It specifies a ZephyrId for a test.
 
 If the linkage is set up correctly in the Allure config, the test will have a hyperlink to the Zephyr test case in the report.
 
@@ -234,4 +211,3 @@ Attribute|Type|Use
 [suite]: ../suite.html
 [tests]: ../test.html
 [title]: #title
-[skip]: #skip

@@ -1,6 +1,6 @@
 ---
 mftf-release: 2.2.0
-redirect_from: /guides/v2.3/magento-functional-testing-framework/2.3/page.html
+redirect_from: /guides/v2.2/magento-functional-testing-framework/2.2/page.html
 ---
 
 # Page structure
@@ -37,7 +37,7 @@ The format of `<page>` is:
 <?xml version="1.0" encoding="UTF-8"?>
 
 <pages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/PageObject.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/PageObject.xsd">
     <page name="" url="" module="" area="">
         <section name=""/>
         <section name=""/>

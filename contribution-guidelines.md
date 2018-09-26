@@ -3,6 +3,7 @@
 
 # Contribution Guidelines for the Magento Functional Testing Framework
 
+
 Use the [fork] & [pull] model to contribute to the Magento Functional Testing Framework (MFTF) code base.
 This contribution model has contributors maintaining their own copy of the forked code base (which can be easily synced with the main copy).
 The forked repository is then used to submit a request to the base repository to pull a set of changes (pull request).
@@ -159,9 +160,9 @@ Label| Description
 [labels]: #labels
 [pull]: #pull-request
 
-[Definition of Done]: {{ site.gdeurl23 }}contributor-guide/contributing_dod.html
+[Definition of Done]: {{ site.gdeurl22 }}contributor-guide/contributing_dod.html
 [documentation update]: https://github.com/magento/devdocs/blob/master/.github/CONTRIBUTING.md
-[Magento coding standards]: {{ site.gdeurl23 }}coding-standards/bk-coding-standards.html
+[Magento coding standards]: {{ site.gdeurl22 }}coding-standards/bk-coding-standards.html
 
 [devdocs mftf]: https://github.com/magento/devdocs/tree/develop/guides/v2.3/magento-functional-testing-framework
 [existing issues]: https://github.com/magento/magento2-functional-testing-framework/issues?q=is%3Aopen+is%3Aissue

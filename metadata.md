@@ -1,6 +1,6 @@
 ---
 mftf-release: 2.2.0
-redirect_from: /guides/v2.3/magento-functional-testing-framework/2.3/metadata.html
+redirect_from: /guides/v2.2/magento-functional-testing-framework/2.2/metadata.html
 ---
 
 # Metadata
@@ -49,7 +49,7 @@ The following diagram demonstrates the XML structure of a metadata file:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <operations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataOperation.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataOperation.xsd">
     <operation name=""
                dataType=""
                type=""
@@ -499,7 +499,7 @@ Example:
 <!-- LINK DEFINITIONS -->
 
 [actions]: test/actions.html
-[api reference]: {{ site.gdeurl23 }}rest/bk-rest.html
+[api reference]: {{ site.gdeurl22 }}rest/bk-rest.html
 [application/x-www-form-urlencoded]: https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1
 {:target="_blank"}
 [catalogCategoryRepositoryV1 image]: img/catalogCategoryRepository-operations.png
@@ -514,7 +514,7 @@ Example:
 [getData]: test/actions.html#getdata
 [HTML forms]: https://www.w3.org/TR/html401/interact/forms.html
 {:target="_blank"}
-[oauth]: {{ site.gdeurl23 }}get-started/authentication/gs-authentication-oauth.html
+[oauth]: {{ site.gdeurl22 }}get-started/authentication/gs-authentication-oauth.html
 {:target="_blank"}
 [operation]: #operation-tag
 [reference]: #reference

@@ -1,28 +1,32 @@
 ---
-mftf-release: 2.3.0
-redirect_from: /guides/v2.3/magento-functional-testing-framework/2.3/commands/codeception.html
+mftf-release: 2.0.2
+redirect_from: /guides/v2.2/magento-functional-testing-framework/2.2/codeception.html
 ---
 
-# CLI commands: vendor/bin/codecept
+# Codeception commands
 
 _This topic was updated due to the {{page.mftf-release}} MFTF release._
 {: style="text-align: right"}
 
 {:.bs-callout .bs-callout-warning}
 We do not recommend using Codeception commands directly as they can break the MFTF basic workflow.
-All the Codeception commands you need are wrapped using the [`mftf` tool][].
+All the Codeception commands you need are wrapped using Robo.
 
-To run the Codeception testing framework commands directly, change your directory to `dev/tests/acceptance`.
-
-## Usage examples
-
-Run all the generated tests:
+See the [list of Robo commands](robo.html). If you'd like to run the Codeception tests directly without using Robo, run:
 
 ```bash
 vendor/bin/codecept run functional
 ```
 
-Run all tests without the `<group value="skip"/>` [annotation](../test/annotations.html):
+## Examples
+
+Run all tests in `dev/tests/acceptance/tests/functional/Magento/FunctionalTest`:
+
+```bash
+vendor/bin/codecept run functional
+```
+
+Run all tests without the `<group value="skpip"/>` [annotation](../test/annotations.html):
 
 ```bash
 vendor/bin/codecept run functional --skip-group skip
@@ -84,8 +88,3 @@ Full reference:
    --no-ansi             Disable ANSI output.
    --no-interaction (-n) Do not ask any interactive question.
 ```
-
-
-<!-- Link definitions -->
-
-[`mftf` tool]: mftf.html
