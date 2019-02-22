@@ -6,7 +6,7 @@
 
 ## Installation
 
-For the installation guidelines and system requirements, refer to [Getting Started](https://devdocs.magento.com/mftf/2.3/getting-started.html).
+For the installation guidelines and system requirements, refer to [Getting Started](https://devdocs.magento.com/mftf/getting-started.html).
 
 ## Contributing
 
