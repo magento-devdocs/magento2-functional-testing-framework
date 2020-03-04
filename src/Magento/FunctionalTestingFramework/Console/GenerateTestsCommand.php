@@ -107,9 +107,6 @@ class GenerateTestsCommand extends BaseGenerateCommand
             return 1;
         }
 
-        $this->setOutputStyle($input, $output);
-        $this->showMftfNotices($output);
-
         if (!empty($tests)) {
             $json = $this->getTestAndSuiteConfiguration($tests);
         }
