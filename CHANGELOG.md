@@ -1,9 +1,37 @@
 Magento Functional Testing Framework Changelog
 ================================================
+2.6.3
+-----
+
+### Fixes
+* added dependency to packages MFTF used but never specified in composer.json
+
+2.6.3
+-----
+
+### New Feature
+* `--filter` option was added to `bin/mftf generate:tests` command. For more details please go to https://devdocs.magento.com/mftf/docs/commands/mftf.html#generatetests
+
+2.6.2
+-----
+
+### Fixes
+* Fixed float conversion error in test generation
+
+2.6.1
+-----
+
+* Usability
+    * Introduced new `.env` configuration `ELASTICSEARCH_VERSION` to support multiple elasticsearch versions
+* Maintainability
+    * Added deprecation notices for upcoming MFTF 3.0.0
+* Replaced facebook webdriver with php-webdriver to support PHP version updates
 
 2.6.0
 -----
 
+* Usability
+    * `magentoCron` action added by community maintainer @lbajsarowicz
 * Traceability
     * MFTF generated cest files are fully compatible for Codeception `dry-run`.
 * Modularity
@@ -23,6 +51,7 @@ Magento Functional Testing Framework Changelog
 * Customizability
     * AWS Secrets Manager has been added as an additional credential storage.
         * See DevDocs for details
+* Bumped dependencies to latest possible versions
 
 ### Fixes
 * Fixed missing before, after, failed steps in cest file when generating tests with `--allow-skipped` option.

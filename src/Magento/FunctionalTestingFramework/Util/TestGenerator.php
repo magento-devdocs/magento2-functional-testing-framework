@@ -11,6 +11,7 @@ use Magento\FunctionalTestingFramework\DataGenerator\Handlers\PersistedObjectHan
 use Magento\FunctionalTestingFramework\DataGenerator\Objects\EntityDataObject;
 use Magento\FunctionalTestingFramework\Exceptions\TestFrameworkException;
 use Magento\FunctionalTestingFramework\Exceptions\TestReferenceException;
+use Magento\FunctionalTestingFramework\Filter\FilterInterface;
 use Magento\FunctionalTestingFramework\Suite\Handlers\SuiteObjectHandler;
 use Magento\FunctionalTestingFramework\Test\Handlers\ActionGroupObjectHandler;
 use Magento\FunctionalTestingFramework\Test\Handlers\TestObjectHandler;
@@ -58,6 +59,8 @@ class TestGenerator
     const CRON_INTERVAL = 60;
     const ARRAY_WRAP_OPEN = '[';
     const ARRAY_WRAP_CLOSE = ']';
+
+    const MFTF_3_O_0_DEPRECATION_MESSAGE = ' is DEPRECATED and will be removed in MFTF 3.0.0.';
 
     /**
      * Actor name for AcceptanceTest
@@ -286,6 +289,11 @@ class TestGenerator
         /** @var TestObject[] $testObjects */
         $testObjects = $this->loadAllTestObjects($testsToIgnore);
         $cestPhpArray = [];
+        $filters = MftfApplicationConfig::getConfig()->getFilterList()->getFilters();
+        /** @var FilterInterface $filter */
+        foreach ($filters as $filter) {
+            $filter->filter($testObjects);
+        }
 
         foreach ($testObjects as $test) {
             // Do not generate test if it is an extended test and parent does not exist
@@ -1041,6 +1049,8 @@ class TestGenerator
                     );
                     break;
                 case "executeInSelenium":
+                    $this->deprecationMessages[] = "DEPRECATED ACTION in Test: at step {$stepKey} 'executeInSelenium'"
+                        . self::MFTF_3_O_0_DEPRECATION_MESSAGE;
                     $testSteps .= $this->wrapFunctionCall($actor, $actionObject, $function);
                     break;
                 case "executeJS":
@@ -1052,6 +1062,16 @@ class TestGenerator
                     );
                     break;
                 case "performOn":
+                    $this->deprecationMessages[] = "DEPRECATED ACTION in Test: at step {$stepKey} 'performOn'"
+                        . self::MFTF_3_O_0_DEPRECATION_MESSAGE;
+                    $testSteps .= $this->wrapFunctionCall(
+                        $actor,
+                        $actionObject,
+                        $selector,
+                        $function,
+                        $time
+                    );
+                    break;
                 case "waitForElementChange":
                     $testSteps .= $this->wrapFunctionCall(
                         $actor,
@@ -2180,6 +2200,6 @@ class TestGenerator
      */
     private function hasDecimalPoint(string $outStr)
     {
-        return strpos($outStr, localeconv()['decimal_point']) === false;
+        return strpos($outStr, localeconv()['decimal_point']) !== false;
     }
 }
